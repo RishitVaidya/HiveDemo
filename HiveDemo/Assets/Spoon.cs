@@ -33,12 +33,12 @@ public class Spoon : MonoBehaviour
 
     private void Update()
     {
-        Vector3 direction = new Vector3(-joystick.Direction.y, 0, joystick.Direction.x);
+        Vector3 direction = new Vector3(joystick.Direction.x, joystick.Direction.y, 0);
 
         GetComponent<Rigidbody>().velocity = direction * 5;
         //transform.Translate(direction * Time.deltaTime * 10, Space.World);
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -11,11), transform.position.y, Mathf.Clamp(transform.position.z, -9, 3));
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3,12), Mathf.Clamp(transform.position.y, 3, 19), transform.position.z);
     }
 
     private void FixedUpdate()
@@ -61,7 +61,7 @@ public class Spoon : MonoBehaviour
 
     public void OnClick_Reload()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
     }
 
 }
