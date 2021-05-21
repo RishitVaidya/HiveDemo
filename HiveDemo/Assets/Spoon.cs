@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spoon : MonoBehaviour
 {
@@ -12,19 +13,32 @@ public class Spoon : MonoBehaviour
 
     public Joystick joystick;
 
+    public GameObject honey;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(WaitAndActivateHoney());
+    }
+
+    IEnumerator WaitAndActivateHoney() 
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i = 0; i < honey.transform.childCount; i++)
+        {
+            honey.transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
     private void Update()
     {
         Vector3 direction = new Vector3(-joystick.Direction.y, 0, joystick.Direction.x);
 
-        transform.Translate(direction * Time.deltaTime * 10, Space.World);
+        GetComponent<Rigidbody>().velocity = direction * 5;
+        //transform.Translate(direction * Time.deltaTime * 10, Space.World);
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -15, 22), transform.position.y, Mathf.Clamp(transform.position.z, -6, 9));
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -11,11), transform.position.y, Mathf.Clamp(transform.position.z, -9, 3));
     }
 
     private void FixedUpdate()
@@ -43,6 +57,11 @@ public class Spoon : MonoBehaviour
             }
         }
             
+    }
+
+    public void OnClick_Reload()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }
